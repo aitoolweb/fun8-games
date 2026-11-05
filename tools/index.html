@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reaction timer — Fun8 Games</title>
+<style>body{font-family:system-ui,sans-serif;max-width:40rem;margin:2rem auto;padding:0 1rem;line-height:1.5;text-align:center}
+#box{height:160px;border-radius:12px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;font-size:1.2rem}
+#box.ready{background:#22c55e;color:#fff}#box.wait{background:#ef4444;color:#fff}
+a.cta{display:inline-block;margin-top:1rem;background:#2563eb;color:#fff;padding:.6rem 1rem;border-radius:6px;text-decoration:none}</style></head>
+<body>
+<h1>Reaction timer</h1>
+<p>Tap when the box turns green. More free browser games on Fun8 Games.</p>
+<div id="box" class="wait">Tap to start</div>
+<p id="msg"></p>
+<p><a class="cta" href="https://funfunfunfunfunfunfunfungames.com/">Open Fun8 Games</a></p>
+<script>
+let t0=null,timer=null,phase='idle';
+const box=document.getElementById('box'), msg=document.getElementById('msg');
+box.onclick=()=>{
+  if(phase==='idle'||phase==='done'){
+    phase='wait'; box.className='wait'; box.textContent='Wait for green…'; msg.textContent='';
+    clearTimeout(timer); timer=setTimeout(()=>{phase='ready'; box.className='ready'; box.textContent='TAP!'; t0=performance.now();}, 1200+Math.random()*2000);
+  } else if(phase==='wait'){ clearTimeout(timer); phase='done'; box.className=''; box.textContent='Too soon — tap to retry'; }
+  else if(phase==='ready'){ const ms=Math.round(performance.now()-t0); phase='done'; box.className=''; box.textContent=ms+' ms — tap to retry'; msg.textContent='Nice. Play more on Fun8 Games.'; }
+};
+</script></body></html>
